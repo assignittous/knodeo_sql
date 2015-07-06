@@ -1,0 +1,1 @@
+compile-lib.coffee

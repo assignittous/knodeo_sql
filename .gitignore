@@ -2,6 +2,9 @@
 logs
 *.log
 
+# Test content
+config.sql.cson
+
 # Runtime data
 pids
 *.pid
