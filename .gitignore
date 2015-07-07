@@ -31,3 +31,4 @@ node_modules
 
 # Test configs
 *.cson
+*.sql
