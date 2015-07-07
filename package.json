@@ -1,0 +1,40 @@
+{
+  "name": "knodeo-sql",
+  "version": "0.1.0",
+  "description": "Simple relational database wrapper",
+  "main": "index.js",
+  "dependencies": {
+    "cson": "^3.0.1",
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-inject-string": "^0.0.2",
+    "gulp-plumber": "^1.0.1",
+    "gulp-task-master": "^1.0.0",
+    "knodeo-configuration": "^0.1.0",
+    "knodeo-logger": "^0.1.0",
+    "pg": "^4.4.0"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.9.3",
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-inject-string": "0.0.2",
+    "gulp-plumber": "^1.0.1",
+    "gulp-task-master": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assignittous/knodeo_sql.git"
+  },
+  "author": "Steven Ng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/assignittous/knodeo_sql/issues"
+  },
+  "homepage": "https://github.com/assignittous/knodeo_sql"
+}
