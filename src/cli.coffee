@@ -14,6 +14,7 @@ noOp = ()->
 
 
 writeDataFile = (data, path)->
+  
   output = cson.createString(data)
   fs.writeFileSync path, output, "UTF-8"
 
@@ -69,15 +70,33 @@ if program.sql? && program.database? && program.output?
     logger.error "SQL file does not exist"
     return
 
+
+
   
   if program.database
     
     if config.current.databases[program.database]?
       console.log "database: #{program.database} OK"
       dbConfig = config.current.databases[program.database]      
+
+
+      console.log "Root: #{program.root}"
+      console.log "First: #{program.first}"
+
       callback = (data)->
         logger.info "Writing to #{program.output}"
+
+        if program.first?
+          data = data[0]
+
+        if program.root?
+          root = {}
+          root[program.root] = data
+          data = root
+
         writeDataFile data, program.output
+      
+
       switch dbConfig.type
         when "mssql"
           logger.info "MSSQL Database"

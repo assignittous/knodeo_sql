@@ -62,8 +62,19 @@ if ((program.sql != null) && (program.database != null) && (program.output != nu
     if (config.current.databases[program.database] != null) {
       console.log("database: " + program.database + " OK");
       dbConfig = config.current.databases[program.database];
+      console.log("Root: " + program.root);
+      console.log("First: " + program.first);
       callback = function(data) {
+        var root;
         logger.info("Writing to " + program.output);
+        if (program.first != null) {
+          data = data[0];
+        }
+        if (program.root != null) {
+          root = {};
+          root[program.root] = data;
+          data = root;
+        }
         return writeDataFile(data, program.output);
       };
       switch (dbConfig.type) {
