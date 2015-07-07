@@ -1,21 +1,27 @@
 pg = require 'pg'
+logger = require('knodeo-logger').Logger
 
-conString = "postgres://user:password@localhost/db"
+exports.postgresql = {
 
-sql = "select count(*) from users"
+  execute: (sql, options, callback) ->
+    logger.info sql
+    connectionString = "postgres://#{options.user}:#{options.password}@#{options.host}/#{options.database}"
 
-pg.connect conString, (err, client, done)->
-  if err
-    console.log "ERROR!"
-    return
-  
+    pg.connect connectionString, (err, client, done)->
+      if err
+        logger.error "Connection Error"
+        return
+      
 
-  client.query sql, (err, result)->
-    if err
-      console.log "SQL QUERY ERROR"
+      client.query sql, (err, result)->
+        if err
+          logger.error "Query error"
+          return
+        if callback?
+          callback(result)
+        done()
+        client.end()
+        return
       return
-    console.log result.rows
-    done()
-    client.end()
-    return
-  return
+
+}
