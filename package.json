@@ -4,6 +4,7 @@
   "description": "Simple relational database wrapper",
   "main": "index.js",
   "dependencies": {
+    "commander": "^2.8.1",
     "cson": "^3.0.1",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
@@ -13,7 +14,9 @@
     "gulp-task-master": "^1.0.0",
     "knodeo-configuration": "^0.1.0",
     "knodeo-logger": "^0.1.0",
-    "pg": "^4.4.0"
+    "lodash": "^3.10.0",
+    "pg": "^4.4.0",
+    "tedious": "^1.11.2"
   },
   "devDependencies": {
     "coffee-script": "^1.9.3",
