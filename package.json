@@ -1,8 +1,11 @@
 {
   "name": "knodeo-sql",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple relational database wrapper",
   "main": "index.js",
+  "bin": {
+    "ksql": "cli.js"
+  },
   "dependencies": {
     "commander": "^2.8.1",
     "cson": "^3.0.1",
