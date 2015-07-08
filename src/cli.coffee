@@ -4,6 +4,7 @@ pkg = require "./package.json"
 fs = require "fs"
 cson = require "cson"
 config = require('knodeo-configuration').Configuration
+path = require("path")
 
 # db support
 postgresql = require("./lib/postgresql").postgresql
@@ -13,18 +14,22 @@ noOp = ()->
   console.log "Nothing ran, couldn't understand your command"
 
 
-writeDataFile = (data, path)->
-  
-  output = cson.createString(data)
-  fs.writeFileSync path, output, "UTF-8"
+writeDataFile = (data, outputPath)->
+  dataType = path.extname(program.data)    
+  switch dataType
+    when ".cson"
+      output = cson.createString(data)
+    else
+      output = JSON.stringify(data, null, 2)
+  fs.writeFileSync outputPath, output, "UTF-8"
 
 
 
 # this is because fs.existsSync is getting deprecated
-fileExists = (path)->
+fileExists = (filePath)->
   try
     # Query the entry
-    stats = fs.lstatSync(path)
+    stats = fs.lstatSync(filePath)
     # Is it a directory?
     if stats.isDirectory()
       # Yes it is

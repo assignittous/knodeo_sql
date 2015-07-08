@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var callback, config, configFile, cson, dbConfig, fileExists, fs, logger, mssql, noOp, options, pkg, postgresql, program, sql, writeDataFile;
+var callback, config, configFile, cson, dbConfig, fileExists, fs, logger, mssql, noOp, options, path, pkg, postgresql, program, sql, writeDataFile;
 
 program = require("commander");
 
@@ -13,6 +13,8 @@ cson = require("cson");
 
 config = require('knodeo-configuration').Configuration;
 
+path = require("path");
+
 postgresql = require("./lib/postgresql").postgresql;
 
 mssql = require("./lib/mssql").mssql;
@@ -21,16 +23,23 @@ noOp = function() {
   return console.log("Nothing ran, couldn't understand your command");
 };
 
-writeDataFile = function(data, path) {
-  var output;
-  output = cson.createString(data);
-  return fs.writeFileSync(path, output, "UTF-8");
+writeDataFile = function(data, outputPath) {
+  var dataType, output;
+  dataType = path.extname(program.data);
+  switch (dataType) {
+    case ".cson":
+      output = cson.createString(data);
+      break;
+    default:
+      output = JSON.stringify(data, null, 2);
+  }
+  return fs.writeFileSync(outputPath, output, "UTF-8");
 };
 
-fileExists = function(path) {
+fileExists = function(filePath) {
   var e, stats;
   try {
-    stats = fs.lstatSync(path);
+    stats = fs.lstatSync(filePath);
     if (stats.isDirectory()) {
       return false;
     } else {
