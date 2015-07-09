@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var callback, config, configFile, cson, dbConfig, fileExists, fs, logger, mssql, noOp, options, path, pkg, postgresql, program, sql, writeDataFile;
+var callback, config, configFile, cson, dbConfig, fileExists, fs, logger, mssql, noOp, options, path, pkg, postgresql, program, sql, sqlite, writeDataFile;
 
 program = require("commander");
 
@@ -18,6 +18,8 @@ path = require("path");
 postgresql = require("./lib/postgresql").postgresql;
 
 mssql = require("./lib/mssql").mssql;
+
+sqlite = require("./lib/sqlite").sqlite;
 
 noOp = function() {
   return console.log("Nothing ran, couldn't understand your command");
@@ -106,6 +108,11 @@ if ((program.sql != null) && (program.database != null) && (program.output != nu
           options.database = program.database;
           logger.info("Postgresql Database");
           postgresql.execute(sql, options, callback);
+          break;
+        case "sqlite":
+          options = dbConfig;
+          logger.info("Sqlite Database");
+          sqlite.execute(sql, options, callback);
           break;
         default:
           logger.error("Database type " + dbConfig.type + " is not supported");

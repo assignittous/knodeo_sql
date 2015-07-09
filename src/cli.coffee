@@ -9,6 +9,7 @@ path = require("path")
 # db support
 postgresql = require("./lib/postgresql").postgresql
 mssql = require("./lib/mssql").mssql
+sqlite = require("./lib/sqlite").sqlite
 
 noOp = ()-> 
   console.log "Nothing ran, couldn't understand your command"
@@ -119,6 +120,10 @@ if program.sql? && program.database? && program.output?
           options.database = program.database                  
           logger.info "Postgresql Database"
           postgresql.execute sql, options, callback
+        when "sqlite"
+          options = dbConfig
+          logger.info "Sqlite Database"
+          sqlite.execute sql, options, callback
         else
           logger.error "Database type #{dbConfig.type} is not supported"
           return
