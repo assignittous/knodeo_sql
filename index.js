@@ -1,8 +1,10 @@
-var callback, config, cson, databaseConfig, fs, logger, mssql, options, postgresql, sql, writeDataFile;
+var callback, config, cson, fs, logger, mssql, options, postgresql, sql, sqlite, writeDataFile;
 
 postgresql = require("./lib/postgresql").postgresql;
 
 mssql = require("./lib/mssql").mssql;
+
+sqlite = require("./lib/sqlite").sqlite;
 
 cson = require("cson");
 
@@ -20,33 +22,45 @@ writeDataFile = function(data, path) {
   return fs.writeFileSync(path, output, "UTF-8");
 };
 
-sql = "select * from users";
 
-options = config.current.databases.pi_dev;
+/*
+sql = "select * from users"
 
-options.database = "pi_dev";
 
-callback = function(data) {
-  return writeDataFile(data, "postgresql.cson");
-};
+options = config.current.databases.pi_dev
+options.database = "pi_dev"
 
-postgresql.execute(sql, options, callback);
+callback = (data)->
+  writeDataFile data, "postgresql.cson"
 
-databaseConfig = config.current.databases['test'];
+postgresql.execute sql, options, callback
 
-options = {
-  userName: databaseConfig.user,
-  password: databaseConfig.password,
-  server: databaseConfig.host,
-  options: {
-    port: databaseConfig.port,
-    database: 'test',
+
+databaseConfig = config.current.databases['test']
+
+
+ * to do - move the options mapping into the mssql lib
+options = 
+  userName: databaseConfig.user
+  password: databaseConfig.password
+  server: databaseConfig.host
+  options:
+    port: databaseConfig.port
+    database: 'test'
     rowCollectionOnDone: true
-  }
-};
+
+callback = (data)->
+  writeDataFile data, "mssql.cson"
+
+mssql.execute "select * from names", options, callback
+ */
+
+options = config.current.databases.test;
 
 callback = function(data) {
-  return writeDataFile(data, "mssql.cson");
+  return writeDataFile(data, "sqlite.cson");
 };
 
-mssql.execute("select * from names", options, callback);
+sql = 'SELECT rowid AS id, info FROM lorem';
+
+sqlite.execute(sql, options, callback);

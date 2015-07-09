@@ -2,6 +2,7 @@
 
 postgresql = require("./lib/postgresql").postgresql
 mssql = require("./lib/mssql").mssql
+sqlite = require("./lib/sqlite").sqlite
 cson = require "cson"
 fs = require "fs"
 logger = require('knodeo-logger').Logger
@@ -13,7 +14,7 @@ writeDataFile = (data, path)->
   output = cson.createString(data)
   fs.writeFileSync path, output, "UTF-8"
 
-
+###
 sql = "select * from users"
 
 
@@ -43,3 +44,12 @@ callback = (data)->
   writeDataFile data, "mssql.cson"
 
 mssql.execute "select * from names", options, callback
+###
+
+options = config.current.databases.test
+callback = (data)->
+  writeDataFile data, "sqlite.cson"
+
+sql = 'SELECT rowid AS id, info FROM lorem'
+
+sqlite.execute sql, options, callback
