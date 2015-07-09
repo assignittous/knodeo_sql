@@ -20,6 +20,7 @@
     "lodash": "^3.10.0",
     "path": "^0.11.14",
     "pg": "^4.4.0",
+    "sqlite3": "^3.0.8",
     "tedious": "^1.11.2"
   },
   "devDependencies": {
