@@ -1,4 +1,4 @@
-
+###
 logger = require('knodeo-logger').Logger
 sqlite3 = require('sqlite3').verbose()
 
@@ -19,3 +19,4 @@ exports.sqlite = {
     db.close()
 
 }
+###
